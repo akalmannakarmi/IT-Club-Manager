@@ -1,0 +1,25 @@
+Create the database
+
+Create the tables
+
+add all the fields
+
+add the foregin keys
+
+Allow Insert to database
+format the Insert
+
+make a query
+
+options 
+
+list data 
+Insert data
+remove data
+query data
+add field
+change field
+remove field
+remove table
+add table
+
