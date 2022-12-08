@@ -25,8 +25,8 @@ class Table:
         c = self.createTxt(fieldNTypes,extra)
         try:
             self.conn.execute(c)
-        except:
-            print(f"Table {self.name} already exists")
+        except Exception as e:
+            print(f"DBError:{e}")
 
     def insert(self,fieldNValues):
         fields = "("
@@ -40,7 +40,7 @@ class Table:
         sValues = sValues[:-1] + ")"
         
         i = f"INSERT INTO {self.name} {fields} VALUES {sValues}"
-        print(i)
+        print(f"--------\nTable:{self.name} \n Operation:Insert \n command:{i} \n values:{values} \n--------")
         self.cur.execute(i,values)
         self.conn.commit()
     
@@ -54,22 +54,25 @@ class Table:
             f = "*"
             
         q = ""
+        values = []
         if (fieldNValues):
             for field,op,value in fieldNValues:
-                q += f"WHERE {field} {op} {value} "
+                values.append(value)
+                q += f"WHERE {field} {op} (?) "
                 
         d = f"SELECT {f} FROM {self.name} {q} {order}"
         
-        self.cur.execute(d)
+        self.cur.execute(d,values)
         result = self.cur.fetchall()
-        print(result)
+        print(f"--------\nTable:{self.name} \n Operation:Query \n command:{d} \n values:{values} \n Result:{result}\n--------")
         return result
     
     def remove(self,value,field="ID",Operator="="):
         if self.fND[field].find("INTEGER") !=-1:
             value =  int(value)
         d = f"DELETE FROM {self.name} WHERE {field} {Operator} (?)"
-        print(d)
+        
+        print(f"--------\nTable:{self.name} \n Operation:Remove \n command:{d} \n values:{value} \n--------")
         self.cur.execute(d,[value])
         self.conn.commit()
         return

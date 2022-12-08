@@ -3,9 +3,9 @@
         "users":{
             "FNDts":{
                 "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-                "FirstName":"NVARCHAR(255) NOT NULL",
-                "MiddleName":"NVARCHAR(255)",
-                "LastName":"NVARCHAR(255)",
+                "Name":"NVARCHAR(255) NOT NULL",
+                "Email":"NVARCHAR(255) NOT NULL",
+                "Password":"NVARCHAR(20) NOT NULL",
                 "Phone":"NVARCHAR(20)",
                 "Address":"NVARCHAR(255)",
                 "Position":"NVARCHAR(50)",
@@ -13,12 +13,11 @@
                 "Points":"INTEGER",
                 "JoinDate":"NVARCHAR(20) NOT NULL",
                 "MDeadline":"NVARCHAR(20) NOT NULL",
-                "Password":"NVARCHAR(20) NOT NULL",
                 "CourseID":"INTEGER"
             },
             "Extra":"FOREIGN KEY (CourseID) REFERENCES Course (ID) ON UPDATE NO ACTION ON DELETE SET NULL"
         },
-        "interest":{
+        "interests":{
             "FNDts":{
                 "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
                 "Interest":"NVARCHAR(255) NOT NULL"
@@ -46,23 +45,16 @@
             },
             "Extra":"FOREIGN KEY (UserID) REFERENCES Users (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (SkillID) REFERENCES Skills (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
         },
-        "routine":{
+        "course":{
             "FNDts":{
                 "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+                "Name":"NVARCHAR(20) NOT NULL",
                 "StartTime":"NVARCHAR(20) NOT NULL",
                 "BreakTime":"NVARCHAR(20) NOT NULL",
                 "EndTime":"NVARCHAR(20) NOT NULL",
                 "EarlyEndTime":"NVARCHAR(20) NOT NULL"
             },
             "Extra":""
-        },
-        "course":{
-            "FNDts":{
-                "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-                "Name":"NVARCHAR(20) NOT NULL",
-                "RoutineID":"INTEGER"
-            },
-            "Extra":"FOREIGN KEY (RoutineID) REFERENCES Routine (ID) ON UPDATE NO ACTION ON DELETE SET NULL"
         },
         "days":{
             "FNDts":{
@@ -73,10 +65,10 @@
         },
         "eEndDays":{
             "FNDts":{
-                "RoutineID":"INTEGERNOT NULL",
-                "DaysID":"INTEGERNOT NULL"
+                "CourseID":"INTEGER NOT NULL",
+                "DayID":"INTEGER NOT NULL"
             },
-            "Extra":"FOREIGN KEY (RoutineID)REFERENCES Routine (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (DaysID) REFERENCES Days (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
+            "Extra":"FOREIGN KEY (CourseID) REFERENCES Course (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (DayID) REFERENCES Days (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
         }
     }
 }
