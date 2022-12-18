@@ -23,7 +23,7 @@ def base():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def default(path):
-    return 'You want path: %s' % path
+    return render_template("error.html",error=f"{path} does not exist")
 
 if __name__ == "__main__":
     app.run(debug=True)
