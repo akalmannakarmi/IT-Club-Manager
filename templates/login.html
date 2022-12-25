@@ -1,0 +1,22 @@
+{% extends '0Base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block body %} 
+<div class="contact" id="contact">
+    <div class="flex-center">
+      <div class="contact-box">
+        <form class="contact-form" action="/login" method="post">
+          <input size="40" class="contact-form-input" placeholder="EMAIL" type="email" name="email" />
+          <br />
+          <input size="40" class="contact-form-input" placeholder="Password" type="password" name="0password"/>
+          <br />
+          <a href="/signup">signup instead?</a>
+          <br>
+          <div class="contact-button-wp">
+            <button class="contact-button" type="submit" value="login"><a>Login</a></button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock %}

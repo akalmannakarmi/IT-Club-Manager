@@ -201,6 +201,10 @@ ul {
   display: flex;
 
 }
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
 
 .hero-img {
   max-width: 640px;

@@ -6,6 +6,7 @@ from table import Table
 import json
 
 conn = sqlite3.connect('members.db')
+cur = conn.cursor()
 root = Tk()
 root.geometry("700x500")
 root.rowconfigure(0,weight=1)
@@ -84,8 +85,8 @@ class DbManager:
         self.tables = []
         self.tableNames = []
 
-        for table,tData in dbData['tables'].items():
-            self.tables.append(Table(conn,table,tData["FNDts"],tData["Extra"]))
+        for table,tData in dbData.items():
+            self.tables.append(Table(cur,table,tData["FNDts"],tData["Extra"]))
             self.tableNames.append(table)
             self.db[table] = tData
 
@@ -168,7 +169,7 @@ class DbManager:
             fields += field+" "*(22-len(field))
         list.insert(END,fields) 
         
-        table = Table(conn,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
+        table = Table(cur,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
         data = table.query()
         for da in data: 
             record = ""
@@ -220,7 +221,7 @@ class DbManager:
         insertButton.pack(side="right")
         
     def insert(self):
-        table = Table(conn,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
+        table = Table(cur,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
         i = 0
         fieldNValues={}
         for field in self.db[self.sTableName.get()]["FNDts"]:
@@ -231,6 +232,7 @@ class DbManager:
         
         try:
             table.insert(fieldNValues)
+            conn.commit()
             showinfo("Inserted",f"Inserted Data: {fieldNValues}")
         except BaseException as e :
             showerror("Failed To insert",f"Tried to Insert Data: {fieldNValues} \n Got Error: {e}")
@@ -273,11 +275,12 @@ class DbManager:
         
     
     def remove(self):
-        table = Table(conn,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
+        table = Table(cur,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
         
         
         try:
             table.remove(self.valueVar.get(),self.sFieldName.get(),self.opVar.get())
+            conn.commit()
             showinfo("Removed",f"Removed Data Where: {self.sFieldName.get()}{self.opVar.get()}{self.valueVar.get()}")
         except BaseException as e :
             showerror("Failed To remove",f"Tried to Remove Where: {self.sFieldName.get()}{self.opVar.get()}{self.valueVar.get()} \n Got Error: {e}")
@@ -340,7 +343,7 @@ class DbManager:
             fields += field+" "*(22-len(field))
         self.queryList.insert(END,fields) 
         
-        table = Table(conn,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
+        table = Table(cur,self.sTableName.get(),self.db[self.sTableName.get()]["FNDts"],self.db[self.sTableName.get()]["Extra"])
         try:
             data = table.query([(self.sFieldName.get(),self.opVar.get(),self.valueVar.get())])
             # showinfo("Query",f"Queried Data Where: {self.sFieldName.get()}{self.opVar.get()}{self.valueVar.get()}")
