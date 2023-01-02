@@ -1,5 +1,6 @@
 from flask import Flask , render_template, request,redirect,session
 from os import path
+import json
 from termcolor import cprint
 from time import time,sleep
 from threading import Thread
@@ -9,10 +10,12 @@ app = Flask(__name__)
 app.secret_key ="secret"
 commits = []
 
+
+
 @app.route('/signup', methods=["POST"])
 def signup():
     startTime = time()
-    # Set all data recived to session
+    # Recive all data
     rData = request.form.deepcopy()
     
     #Print data Recived
@@ -91,9 +94,30 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('email')
-    session.pop('name')
+    if 'email' in session:
+        session.pop('email')
+    if 'name' in session:
+        session.pop('name')
     return redirect('/login')
+
+@app.route('/users',methods=['POST'])
+def users():
+    startTime = time()
+    # Set all data recived to session
+    rData = json.loads(request.data) 
+    
+    #Print data Recived
+    cprint(f"Users {rData}",'blue')
+        
+        
+    users = db.getMembers(rData['conditions'],rData['fields'])
+    cprint(f"Users Data Sent:{time()-startTime}",'cyan')
+    return users
+
+@app.route('/interests')
+def interests():
+    interests = db.getInterests()
+    return render_template('0interests.html',interests=interests)
 
 # @app.route('/', defaults={'path': ''})
 @app.route('/')

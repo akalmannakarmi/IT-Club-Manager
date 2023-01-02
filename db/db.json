@@ -1,72 +1,72 @@
 {
-    "users":{
-        "FNDts":{
-            "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-            "Name":"NVARCHAR(255) NOT NULL",
-            "Email":"NVARCHAR(255) NOT NULL",
-            "Password":"NVARCHAR(20) NOT NULL",
-            "Phone":"NVARCHAR(20)",
-            "Address":"NVARCHAR(255)",
-            "Position":"NVARCHAR(50)",
-            "Rank":"NVARCHAR(50)",
-            "Points":"INTEGER",
-            "JoinDate":"NVARCHAR(20) NOT NULL",
-            "MDeadline":"NVARCHAR(20) NOT NULL",
-            "CourseID":"INTEGER"
+    "users": {
+        "FNDts": {
+            "ID": "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+            "Name": "NVARCHAR(255) NOT NULL",
+            "Email": "NVARCHAR(255) NOT NULL",
+            "Password": "NVARCHAR(20) NOT NULL",
+            "Phone": "NVARCHAR(20)",
+            "Address": "NVARCHAR(255)",
+            "Position": "NVARCHAR(50)",
+            "Rank": "NVARCHAR(50)",
+            "Points": "INTEGER",
+            "JoinDate": "NVARCHAR(20) NOT NULL",
+            "MDeadline": "NVARCHAR(20) NOT NULL",
+            "CourseID": "INTEGER"
         },
-        "Extra":"FOREIGN KEY (CourseID) REFERENCES Course (ID) ON UPDATE NO ACTION ON DELETE SET NULL"
+        "Extra": "FOREIGN KEY (CourseID) REFERENCES Course (ID) ON UPDATE NO ACTION ON DELETE SET NULL"
     },
-    "interests":{
-        "FNDts":{
-            "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-            "Interest":"NVARCHAR(255) NOT NULL"
+    "interests": {
+        "FNDts": {
+            "ID": "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+            "Interest": "NVARCHAR(255) NOT NULL"
         },
-        "Extra":""
+        "Extra": ""
     },
-    "userInterests":{
-        "FNDts":{
-            "UserID":"INTEGER NOT NULL",
-            "InterestID":"INTEGER NOT NULL"
+    "userInterests": {
+        "FNDts": {
+            "UserID": "INTEGER NOT NULL",
+            "InterestID": "INTEGER NOT NULL"
         },
-        "Extra":"FOREIGN KEY (UserID) REFERENCES Users (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (InterestID) REFERENCES Interests (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
+        "Extra": "FOREIGN KEY (UserID) REFERENCES Users (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (InterestID) REFERENCES Interests (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
     },
-    "skills":{
-        "FNDts":{
-            "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-            "Skill":"NVARCHAR(255) NOT NULL"
+    "skills": {
+        "FNDts": {
+            "ID": "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+            "Skill": "NVARCHAR(255) NOT NULL"
         },
-        "Extra":""
+        "Extra": ""
     },
-    "userSkills":{
-        "FNDts":{
-            "UserID":"INTEGER NOT NULL",
-            "SkillID":"INTEGER NOT NULL"
+    "userSkills": {
+        "FNDts": {
+            "UserID": "INTEGER NOT NULL",
+            "SkillID": "INTEGER NOT NULL"
         },
-        "Extra":"FOREIGN KEY (UserID) REFERENCES Users (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (SkillID) REFERENCES Skills (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
+        "Extra": "FOREIGN KEY (UserID) REFERENCES Users (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (SkillID) REFERENCES Skills (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
     },
-    "course":{
-        "FNDts":{
-            "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-            "Name":"NVARCHAR(20) NOT NULL",
-            "StartTime":"NVARCHAR(20) NOT NULL",
-            "BreakTime":"NVARCHAR(20) NOT NULL",
-            "EndTime":"NVARCHAR(20) NOT NULL",
-            "EarlyEndTime":"NVARCHAR(20) NOT NULL"
+    "course": {
+        "FNDts": {
+            "ID": "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+            "Name": "NVARCHAR(20) NOT NULL",
+            "StartTime": "NVARCHAR(20) NOT NULL",
+            "BreakTime": "NVARCHAR(20) NOT NULL",
+            "EndTime": "NVARCHAR(20) NOT NULL",
+            "EarlyEndTime": "NVARCHAR(20) NOT NULL"
         },
-        "Extra":""
+        "Extra": ""
     },
-    "days":{
-        "FNDts":{
-            "ID":"INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
-            "Day":"NVARCHAR(20) NOT NULL"
+    "days": {
+        "FNDts": {
+            "ID": "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL",
+            "Day": "NVARCHAR(20) NOT NULL"
         },
-        "Extra":""
+        "Extra": ""
     },
-    "eEndDays":{
-        "FNDts":{
-            "CourseID":"INTEGER NOT NULL",
-            "DayID":"INTEGER NOT NULL"
+    "eEndDays": {
+        "FNDts": {
+            "CourseID": "INTEGER NOT NULL",
+            "DayID": "INTEGER NOT NULL"
         },
-        "Extra":"FOREIGN KEY (CourseID) REFERENCES Course (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (DayID) REFERENCES Days (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
+        "Extra": "FOREIGN KEY (CourseID) REFERENCES Course (ID) ON UPDATE NO ACTION ON DELETE CASCADE FOREIGN KEY (DayID) REFERENCES Days (ID) ON UPDATE NO ACTION ON DELETE CASCADE"
     }
 }

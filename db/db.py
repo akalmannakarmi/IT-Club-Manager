@@ -136,6 +136,65 @@ def getMember(getFields,email=None,name=None):
         return dbTable['users'].query([('name','=',name)],getFields)
     raise SyntaxError("Must pass a value to getMember")
 
+def getMembers(conditions=None,fields=None):
+    result = []
+    for field,op,value in conditions:
+        if field == 'Course':
+            IDs = dbTable["course"].query([("Name",op,value)],['ID'])
+            Id = listify(IDs)
+            return getMembers([("CourseID","IN",Id)],fields)
+        elif field == 'Interest':
+            IDs = dbTable["interests"].query([("Interest",op,value)],['ID'])
+            Id = listify(IDs)
+            UIDs = dbTable["userInterests"].query([("InterestID",'IN',Id)],["UserID"])
+            UId = listify(UIDs)
+            return getMembers([("ID","IN",UId)],fields)
+        elif field == 'Skill':
+            IDs = dbTable["skills"].query([("Skill",op,value)],['ID'])
+            Id = listify(IDs)
+            UIDs = dbTable["userSkills"].query([("SkillID",'IN',Id)],["UserID"])
+            UId = listify(UIDs)
+            return getMembers([("ID","IN",UId)],fields)
+    qFields=['ID']
+    for field in fields:
+        for field_ in dbTable['users'].fND:
+            if field == 'Interests' or field =='Course' or field =='Skills' or field in qFields:
+                break
+            elif field == field_ :
+                qFields.append(field)
+    qData = dbTable['users'].query(conditions,qFields)
+    for row in qData:
+        t = []
+        for field in fields:
+            val = "Invalid"
+            if field == 'Interests':
+                interestIDs =dbTable["userInterests"].query([('UserID','=',row[0])],['InterestID'])
+                interestIDs = listify(interestIDs)
+                val = dbTable["interests"].query([('ID','IN',interestIDs)],['Interest'])
+            elif field == 'Skills':
+                skillIDs =dbTable["userSkills"].query([('UserID','=',row[0])],['SkillID'])
+                skillIDs = listify(skillIDs)
+                val = dbTable["skills"].query([('ID','IN',skillIDs)],['Skill'])
+            elif field == 'Course':
+                courseID =dbTable["users"].query([('ID','=',row[0])],['CourseID'])
+                val = dbTable["course"].query([('ID','=',courseID[0][0])],['Name'])
+            else:
+                for i in range(0,len(qFields)):
+                    if field == qFields[i]:
+                        val = row[i]
+            t.append(val)
+        result.append(t)   
+    return result
+
+def getInterests(conditions=None,fields=None):
+    return dbTable['interests'].query(conditions,fields)
+
+def listify(data):
+    result = []
+    for val in data:
+        result.append(val[0])
+    return result
+
 try:
     commit=addCourse(name="BCA2")
     commit()

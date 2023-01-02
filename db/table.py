@@ -62,6 +62,7 @@ class Table:
         
     
     def query(self,fieldNValues=None,fields=None,order="",show=False):
+        result= []
         f = ""
         if (fields):
             for field in fields:
@@ -74,8 +75,13 @@ class Table:
         values = []
         if (fieldNValues):
             for field,op,value in fieldNValues:
-                values.append(value)
-                q += f"WHERE {field} {op} (?) "
+                if type(value) == list:
+                    values = value
+                    v = ','.join("?" for vs in values)
+                else:
+                    values.append(value)
+                    v = '?'
+                q += f"WHERE {field} {op} ({v}) "
                 
         c = f"SELECT {f} FROM {self.name} {q} {order}"
         
@@ -84,13 +90,13 @@ class Table:
             
         try:
             self.cur.execute(c,values)
+            result = self.cur.fetchall()
             if show:
                 self.display(f"Result: Success:{result}",self.color)
         except BaseException as e:
             if show:
                 self.display(f"Result: Failed \tError:{e}",self.eColor)
         
-        result = self.cur.fetchall()
         return result
     
     def remove(self,value,field="ID",Operator="=",show=True):
