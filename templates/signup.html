@@ -1,0 +1,32 @@
+{% extends '0Base.html' %}
+{% block title %} Sign Up {% endblock %}
+
+{% block body %} 
+
+<div class="contact" id="contact">
+      <div class="flex-center">
+        <div class="contact-box">
+          <form class="contact-form" action="/signup" method="post">
+            <input size="40" class="contact-form-input" placeholder="Name" type="text" name="name"/>
+            <br />
+            <input size="16" class="contact-form-input" placeholder="Course" type="text" name="course"/>
+            <input size="16" class="contact-form-input" placeholder="Semester" type="text" name="semester"/>
+            <br />
+            <input size="40" class="contact-form-input" placeholder="Interests" type="text" name="interests" />
+            <br />
+            <input size="40" class="contact-form-input" placeholder="Skills" type="text" name="skills" />
+            <br />
+            <input size="40" class="contact-form-input" placeholder="EMAIL" type="email" name="email" />
+            <br />
+            <input size="40" class="contact-form-input" placeholder="Password" type="password" name="0password"/>
+            <br />
+            <a href="/login">login instead?</a>
+            <br>
+            <div class="contact-button-wp">
+              <button class="contact-button" type="submit" value="signUp"><a>SignUp</a></button>
+            </div>
+          </form>
+        </div>
+      </div>
+</div>
+{% endblock %}
