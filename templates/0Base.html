@@ -12,22 +12,7 @@
 </head>
 
 <body>
-    {% block navBar %}
-    <div class="navbar">
-        <a href="#">
-            <img src="{{ url_for('static',filename='img/logo2.png') }}" alt="navbar-logo" class="navbar-logo" />
-        </a>
-        <ul class="navbar-list">
-            <li class="navbar-items"><a href="#">HOME</a></li>
-            <li class="navbar-items"><a href="#events">EVENTS</a></li>
-            <li class="navbar-items"><a href="#downloads">DOWNLOADS</a></li>
-            <li class="navbar-items"><a href="#career">CAREER</a></li>
-            <li class="navbar-items"><a href="#about">ABOUT US</a></li>
-            <li class="navbar-items"><a href="#contact">CONTACT</a></li>
-        </ul>
-        <button class="navbar-button"><a href="/signup">JOIN NOW</a></button>
-    </div>
-    {% endblock %}
+    {% block navBar %} {% endblock %}
     <div class="content">{% block body %} This is Base.html {% endblock %}</div>
 
     <!-- <div class="loader-wrapper" id="loader">

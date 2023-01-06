@@ -1,5 +1,4 @@
 function setShowField() {
-    console.log("Got here")
     showFields = []
     let getFields = document.getElementsByClassName('get-fields');
     for (let i = 0; i < getFields.length; i++) {
@@ -8,14 +7,18 @@ function setShowField() {
         }
     }
     getUsers();
+    setOrderBys();
 }
 
+let orderI = 0
 let data = []
 let showFields = []
 document.getElementById("btn-find-user").addEventListener('click', getUsers)
 document.getElementById('user-name-input').addEventListener('input', getUsers)
 document.getElementById('field-vals').addEventListener('change', getUsers)
 document.getElementById('op-vals').addEventListener('change', getUsers)
+document.getElementById('order-vals').addEventListener('change', show)
+document.getElementById('order-reverse').addEventListener('change', show)
 
 let getFields = document.getElementsByClassName('get-fields');
 for (let i = 0; i < getFields.length; i++) {
@@ -24,10 +27,21 @@ for (let i = 0; i < getFields.length; i++) {
 setShowField()
 
 
+function order(a, b) {
+    if (a[orderI] === b[orderI]) {
+        return 0;
+    }
+    return (a[orderI] < b[orderI]) ? -1 : 1;
+}
+
 
 function show() {
-    console.log(data);
-    console.log(showFields);
+    let orderVal = document.getElementById('order-vals').value;
+    orderI = showFields.indexOf(orderVal)
+    data.sort(order)
+    if (document.getElementById('order-reverse').checked) {
+        data.reverse()
+    }
     let tableFieldsData = ''
     showFields.forEach(element => {
         tableFieldsData += `<th>${element}</th>`
@@ -70,12 +84,13 @@ function getUsers() {
     }).then(response => response.json()).then(function(users) {
         data = users;
         show();
-        // console.log(users);
-        // let content = '';
-        // users.forEach(user => {
-        //     content += `<li>${user[0]}</li>`;
-        // });
-        // // content += `<li>${(new Date().getTime() / 1000)-startTime}</li>`;
-        // document.getElementById("user-list").innerHTML = content;
     });
+}
+
+function setOrderBys() {
+    content = ''
+    showFields.forEach(field => {
+        content += `<option value="${field}">${field}</option>`
+    });
+    document.getElementById("order-vals").innerHTML = content;
 }

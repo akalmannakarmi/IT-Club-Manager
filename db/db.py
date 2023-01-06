@@ -136,9 +136,10 @@ def getMember(getFields,email=None,name=None):
         return dbTable['users'].query([('name','=',name)],getFields)
     raise SyntaxError("Must pass a value to getMember")
 
-def getMembers(conditions=None,fields=None):
+def getMembers(condition=None,fields=None,orderby=''):
     result = []
-    for field,op,value in conditions:
+    # For contition in another table
+    for field,op,value in condition:
         if field == 'Course':
             IDs = dbTable["course"].query([("Name",op,value)],['ID'])
             Id = listify(IDs)
@@ -155,6 +156,7 @@ def getMembers(conditions=None,fields=None):
             UIDs = dbTable["userSkills"].query([("SkillID",'IN',Id)],["UserID"])
             UId = listify(UIDs)
             return getMembers([("ID","IN",UId)],fields)
+    # Store the fields to get when quering
     qFields=['ID']
     for field in fields:
         for field_ in dbTable['users'].fND:
@@ -162,7 +164,7 @@ def getMembers(conditions=None,fields=None):
                 break
             elif field == field_ :
                 qFields.append(field)
-    qData = dbTable['users'].query(conditions,qFields)
+    qData = dbTable['users'].query(condition,qFields)
     for row in qData:
         t = []
         for field in fields:

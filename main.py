@@ -114,13 +114,14 @@ def users():
     cprint(f"Users Data Sent:{time()-startTime}",'cyan')
     return users
 
-@app.route('/interests')
-def interests():
-    interests = db.getInterests()
-    return render_template('0interests.html',interests=interests)
+
+@app.route('/')
+def index():
+    if 'email' not in session or 'name' not in session:
+        return redirect('/login')
+    return render_template('index.html')
 
 # @app.route('/', defaults={'path': ''})
-@app.route('/')
 @app.route('/<path:p>')
 def default(p=""):
     cprint(f"Data Recived:{p}",'blue')

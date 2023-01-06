@@ -61,7 +61,7 @@ class Table:
                 self.display(f"Result: Failed \tError:{e}",self.eColor)
         
     
-    def query(self,fieldNValues=None,fields=None,order="",show=False):
+    def query(self,fieldNValues=None,fields=None,orderby='',show=False):
         result= []
         f = ""
         if (fields):
@@ -82,8 +82,11 @@ class Table:
                     values.append(value)
                     v = '?'
                 q += f"WHERE {field} {op} ({v}) "
-                
-        c = f"SELECT {f} FROM {self.name} {q} {order}"
+        
+        if orderby:
+            orderby = f'ORDER BY {orderby}'        
+        
+        c = f"SELECT {f} FROM {self.name} {q} {orderby}"
         
         if show:
             self.display(f"Query in Table:{self.name} \nCommand:{c}\tValues:{values}",self.color)

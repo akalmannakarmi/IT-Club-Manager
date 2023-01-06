@@ -1,25 +1,22 @@
-Create the database
+Index page
+    convert to bootstrap
+    remove uneccesary
+    insert actuall data
+    change login button to profile pic
+Signup page
+    front end validation
+login page
+    front end validation
+users page
+    admins only
+    better ui
+myProfile page
+    able to edit data
+    proper ui
 
-Create the tables
 
-add all the fields
-
-add the foregin keys
-
-Allow Insert to database
-format the Insert
-
-make a query
-
-options 
-
-list data 
-Insert data
-remove data
-query data
-add field
-change field
-remove field
-remove table
-add table
-
+Future
+Live global chat mode
+    on index page
+    list of users
+    save chat log
