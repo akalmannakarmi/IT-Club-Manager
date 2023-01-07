@@ -12,9 +12,17 @@ commits = []
 
 
 
-@app.route('/signup', methods=["POST"])
+@app.route('/signup', methods=["POST","GET"])
 def signup():
     startTime = time()
+    
+    if 'email' in session and 'name' in session:
+        return redirect('/')
+    
+    if request.method == "GET":
+        cprint(f"Signup Page Sent:{time()-startTime}",'cyan')
+        return render_template('signup.html')
+    
     # Recive all data
     rData = request.form.deepcopy()
     
@@ -32,11 +40,11 @@ def signup():
     
     # Invalid data 
     if len(rData['name'])<3:
-        return render_template("error.html",error=f"Name cant be shorter that 3")
+        return render_template("signup.html",values=rData,name=True)
     if rData['email'].find('@') == -1:
-        return render_template("error.html",error=f"Invalid Email")
+        return render_template("signup.html",values=rData,email=True)
     if len(rData['0password'])<10:
-        return render_template("error.html",error=f"Password cant be shorter that 10")
+        return render_template("signup.html",values=rData,password=True)
     
     # Add to database
     try:
@@ -53,9 +61,17 @@ def signup():
     cprint(f"Signup Time:{time()-startTime}",'cyan')
     return redirect('/')
 
-@app.route('/login', methods=["POST"])
+@app.route('/login', methods=["POST","GET"])
 def login():
     startTime = time()
+    
+    if 'email' in session and 'name' in session:
+        return redirect('/')
+    
+    if request.method == "GET":
+        cprint(f"Login Page Sent:{time()-startTime}",'cyan')
+        return render_template('login.html')
+    
     # Set all data recived to session
     rData = request.form.deepcopy()
     
@@ -68,20 +84,15 @@ def login():
         
     # Error on not enough data
     if not ('email' in rData and '0password'):
-        return render_template("error.html",error=f"Incomplete data")
-    
-    if rData['email'].find('@') == -1:
-        return render_template("error.html",error=f"Invalid Email")
-    if len(rData['0password'])<10:
-        return render_template("error.html",error=f"Password cant be shorter that 10")
+        return render_template("login.html",error=f"Incomplete request")
     
     # check in database
     results = db.getMember(['Name','Email','Password'],rData['email'])
-    if not results[0]:
-        return render_template("error.html",error=f"The account doesn't exist")
+    if not results:
+        return render_template("login.html",email=True,vEmail=rData['email'],vPassword=rData['0password'])
     
     if results[0][2] != rData['0password']:
-        return render_template("error.html",error="Incorrect Password")
+        return render_template("login.html",password=True,vEmail=rData['email'],vPassword=rData['0password'])
     
     # Add the req data to session
     keys = ['email']

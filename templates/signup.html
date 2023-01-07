@@ -1,32 +1,53 @@
-{% extends '0Base.html' %}
-{% block title %} Sign Up {% endblock %}
-
-{% block body %} 
-
-<div class="contact" id="contact">
-      <div class="flex-center">
-        <div class="contact-box">
-          <form class="contact-form" action="/signup" method="post">
-            <input size="40" class="contact-form-input" placeholder="Name" type="text" name="name"/>
-            <br />
-            <input size="16" class="contact-form-input" placeholder="Course" type="text" name="course"/>
-            <input size="16" class="contact-form-input" placeholder="Semester" type="text" name="semester"/>
-            <br />
-            <input size="40" class="contact-form-input" placeholder="Interests" type="text" name="interests" />
-            <br />
-            <input size="40" class="contact-form-input" placeholder="Skills" type="text" name="skills" />
-            <br />
-            <input size="40" class="contact-form-input" placeholder="EMAIL" type="email" name="email" />
-            <br />
-            <input size="40" class="contact-form-input" placeholder="Password" type="password" name="0password"/>
-            <br />
-            <a href="/login">login instead?</a>
-            <br>
-            <div class="contact-button-wp">
-              <button class="contact-button" type="submit" value="signUp"><a>SignUp</a></button>
+{% extends '0Base.html' %} {% block title %} Sign Up {% endblock %} {% block body %}
+<div class="d-flex mt-5 align-items-center">
+    <div class="mx-auto">
+        <h1 class="text-center">Sign up</h1>
+        <div class="card shadow rounded border border-2 border-dark">
+            <div class="card-body mt-4 mx-auto px-5">
+                <form class="container contact-form" action="/signup" method="post">
+                    <div class="row">
+                        <div class="col-8">
+                            <label for="name">Name</label>
+                            <input class="form-control" id="name" placeholder="Name" type="text" name="name">
+                            <small id="name-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="col-4">
+                            <label for="name">Course</label>
+                            <input class="form-control" id="course" placeholder="Course" type="text" name="course">
+                            <small id="course-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="name">Interests</label>
+                            <input class="form-control" id="interests" placeholder="Interests" type="text" name="interests">
+                            <small id="interests-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="col-6">
+                            <label for="name">Skills</label>
+                            <input class="form-control" id="skills" placeholder="Skills" type="text" name="skills">
+                            <small id="skills-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="name">Email</label>
+                        <input class="form-control" id="skills" placeholder="Email" type="email" name="email">
+                        <small id="email-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input class="form-control" id="skills" placeholder="Password" type="password" name="0password">
+                        <small id="password-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                    </div>
+                    <br>
+                    <a href="/login">login instead?</a>
+                    <br>
+                    <button class="btn btn-primary" type="submit" value="signUp">SignUp</button>
+                </form>
             </div>
-          </form>
         </div>
-      </div>
+    </div>
 </div>
+{% endblock %}{% block bodyEnd %}
+<script src="{{ url_for( 'static',filename='js/signup.js' ) }} "></script>
 {% endblock %}
