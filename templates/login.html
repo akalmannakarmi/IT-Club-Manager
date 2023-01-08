@@ -6,12 +6,12 @@
             <div class="card-body mt-4 mx-auto px-5">
                 <form class="contact-form" action="/login" method="post">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="{{vEmail}}">{% if email %}
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="{{rData['email']}}">{% if email %}
                     <small id="email-warning" class="form-text text-warning">Account doesn't Exists</small>{% else %}
                     <small id="email-warning" class="form-text text-warning" hidden>Account doesn't Exists</small>{% endif %}
                     <br>
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Enter password" name="0password" value="{{vPassword}}">{% if password %}
+                    <input type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Enter password" name="0password" value="{{rData['0password']}}">{% if password %}
                     <small id="password-warning" class="form-text text-warning">Incorrect Password</small>{% else %}
                     <small id="password-warning" class="form-text text-warning" hidden>Incorrect Password</small>{% endif %}
                     <br><br>

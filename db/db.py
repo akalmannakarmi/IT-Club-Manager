@@ -191,6 +191,9 @@ def getMembers(condition=None,fields=None,orderby=''):
 def getInterests(conditions=None,fields=None):
     return dbTable['interests'].query(conditions,fields)
 
+def getCourses(conditions=None,fields=None):
+    return dbTable['course'].query(conditions,fields)
+
 def listify(data):
     result = []
     for val in data:

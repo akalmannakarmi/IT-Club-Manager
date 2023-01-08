@@ -11,7 +11,6 @@ app.secret_key ="secret"
 commits = []
 
 
-
 @app.route('/signup', methods=["POST","GET"])
 def signup():
     startTime = time()
@@ -21,7 +20,7 @@ def signup():
     
     if request.method == "GET":
         cprint(f"Signup Page Sent:{time()-startTime}",'cyan')
-        return render_template('signup.html')
+        return render_template('signup.html',rData={},courses=db.getCourses(fields=["Name"]))
     
     # Recive all data
     rData = request.form.deepcopy()
@@ -35,20 +34,20 @@ def signup():
         
     # Error on not enough data
     if not ('name' in rData and 'email' in rData and '0password' in rData and 'skills' in rData
-            and 'course' in rData and 'semester' in rData and 'interests' in rData):
+            and 'course' in rData and 'interests' in rData):
         return render_template("error.html",error=f"Incomplete data")
     
     # Invalid data 
     if len(rData['name'])<3:
-        return render_template("signup.html",values=rData,name=True)
+        return render_template("signup.html",rData=rData,name=True,courses=db.getCourses(fields=["Name"]))
     if rData['email'].find('@') == -1:
-        return render_template("signup.html",values=rData,email=True)
+        return render_template("signup.html",rData=rData,email=True,courses=db.getCourses(fields=["Name"]))
     if len(rData['0password'])<10:
-        return render_template("signup.html",values=rData,password=True)
+        return render_template("signup.html",rData=rData,password=True,courses=db.getCourses(fields=["Name"]))
     
     # Add to database
     try:
-        commit = db.addMember(rData['name'],rData['email'],rData['0password'],rData['course']+rData['semester'],rData['interests'],rData['skills'])
+        commit = db.addMember(rData['name'],rData['email'],rData['0password'],rData['course'],rData['interests'],rData['skills'])
         commits.append(commit)
     except BaseException as e:
         return render_template("error.html",error=f"Error: {e}")
@@ -70,7 +69,7 @@ def login():
     
     if request.method == "GET":
         cprint(f"Login Page Sent:{time()-startTime}",'cyan')
-        return render_template('login.html')
+        return render_template('login.html',rData={})
     
     # Set all data recived to session
     rData = request.form.deepcopy()
@@ -89,10 +88,10 @@ def login():
     # check in database
     results = db.getMember(['Name','Email','Password'],rData['email'])
     if not results:
-        return render_template("login.html",email=True,vEmail=rData['email'],vPassword=rData['0password'])
+        return render_template("login.html",email=True,rData=rData)
     
     if results[0][2] != rData['0password']:
-        return render_template("login.html",password=True,vEmail=rData['email'],vPassword=rData['0password'])
+        return render_template("login.html",password=True,rData=rData)
     
     # Add the req data to session
     keys = ['email']

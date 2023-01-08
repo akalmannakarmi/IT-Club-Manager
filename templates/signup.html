@@ -8,36 +8,46 @@
                     <div class="row">
                         <div class="col-8">
                             <label for="name">Name</label>
-                            <input class="form-control" id="name" placeholder="Name" type="text" name="name">
-                            <small id="name-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                            <input class="form-control" id="name" placeholder="Name" type="text" name="name" value="{{rData['name']}}">{% if name %}
+                            <small id="name-warning" class="form-text text-warning">Invalid Name</small>{% else %}
+                            <small id="name-warning" class="form-text text-warning" hidden>Invalid Name</small>{% endif %}
                         </div>
                         <div class="col-4">
-                            <label for="name">Course</label>
-                            <input class="form-control" id="course" placeholder="Course" type="text" name="course">
-                            <small id="course-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                            <label for="course">Course</label>
+                            <select class="form-select" aria-label="Default select example" id="course" name="course">{%for course in courses%}
+                                {%if course[0] == rData['course'] %}
+                                <option selected value="{{rData[ 'course']}}">{{rData['course']}}</option>{%else%}
+                                <option value="{{course[0]}}">{{course[0]}}</option>{%endif%}{%endfor%}
+                            </select>{% if course %}
+                            <small id="course-warning" class="form-text text-warning">Invalid Course</small>{% else %}
+                            <small id="course-warning" class="form-text text-warning" hidden>Invalid Course</small>{% endif %}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <label for="name">Interests</label>
-                            <input class="form-control" id="interests" placeholder="Interests" type="text" name="interests">
-                            <small id="interests-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                            <label for="interests">Interests</label>
+                            <input class="form-control" id="interests" placeholder="Interests" type="text" name="interests" value="{{rData[ 'interests']}}">{% if interests %}
+                            <small id="interests-warning" class="form-text text-warning">Invalid Interests</small>{% else %}
+                            <small id="interests-warning" class="form-text text-warning" hidden>Invalid Interests</small>{% endif %}
                         </div>
                         <div class="col-6">
-                            <label for="name">Skills</label>
-                            <input class="form-control" id="skills" placeholder="Skills" type="text" name="skills">
-                            <small id="skills-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                            <label for="skills">Skills</label>
+                            <input class="form-control" id="skills" placeholder="Skills" type="text" name="skills" value="{{rData[ 'skills']}}">{% if skills %}
+                            <small id="skills-warning" class="form-text text-warning">Invalid Skills</small>{% else %}
+                            <small id="skills-warning" class="form-text text-warning" hidden>Invalid Skills</small>{% endif %}
                         </div>
                     </div>
                     <div>
-                        <label for="name">Email</label>
-                        <input class="form-control" id="skills" placeholder="Email" type="email" name="email">
-                        <small id="email-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                        <label for="email">Email</label>
+                        <input class="form-control" id="email" placeholder="Email" type="email" name="email" value="{{rData[ 'email']}}">{% if email %}
+                        <small id="email-warning" class="form-text text-warning">Invalid Email</small>{% else %}
+                        <small id="email-warning" class="form-text text-warning" hidden>Invalid Email</small>{% endif %}
                     </div>
                     <div>
                         <label for="password">Password</label>
-                        <input class="form-control" id="skills" placeholder="Password" type="password" name="0password">
-                        <small id="password-warning" class="form-text text-warning">We'll never share your email with anyone else.</small>
+                        <input class="form-control" id="password" placeholder="Password" type="password" name="0password" value="{{rData[ '0password']}}">{% if password %}
+                        <small id="password-warning" class="form-text text-warning">Invalid Password</small>{% else %}
+                        <small id="password-warning" class="form-text text-warning" hidden>Invalid Password</small>{% endif %}
                     </div>
                     <br>
                     <a href="/login">login instead?</a>
@@ -49,5 +59,5 @@
     </div>
 </div>
 {% endblock %}{% block bodyEnd %}
-<script src="{{ url_for( 'static',filename='js/signup.js' ) }} "></script>
+<script src="{{ url_for( 'static',filename='js/signup.js' ) }}"></script>
 {% endblock %}

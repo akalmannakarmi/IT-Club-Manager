@@ -3,10 +3,6 @@ Index page
     remove uneccesary
     insert actuall data
     change login button to profile pic
-Signup page
-    front end validation
-login page
-    front end validation
 users page
     admins only
     better ui
