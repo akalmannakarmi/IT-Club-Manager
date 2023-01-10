@@ -136,10 +136,10 @@ def getMember(getFields,email=None,name=None):
         return dbTable['users'].query([('name','=',name)],getFields)
     raise SyntaxError("Must pass a value to getMember")
 
-def getMembers(condition=None,fields=None,orderby=''):
+def getMembers(conditions=None,fields=None,orderby=''):
     result = []
     # For contition in another table
-    for field,op,value in condition:
+    for field,op,value in conditions:
         if field == 'Course':
             IDs = dbTable["course"].query([("Name",op,value)],['ID'])
             Id = listify(IDs)
@@ -164,7 +164,7 @@ def getMembers(condition=None,fields=None,orderby=''):
                 break
             elif field == field_ :
                 qFields.append(field)
-    qData = dbTable['users'].query(condition,qFields)
+    qData = dbTable['users'].query(conditions,qFields)
     for row in qData:
         t = []
         for field in fields:
@@ -172,14 +172,17 @@ def getMembers(condition=None,fields=None,orderby=''):
             if field == 'Interests':
                 interestIDs =dbTable["userInterests"].query([('UserID','=',row[0])],['InterestID'])
                 interestIDs = listify(interestIDs)
-                val = dbTable["interests"].query([('ID','IN',interestIDs)],['Interest'])
+                vals = dbTable["interests"].query([('ID','IN',interestIDs)],['Interest'])
+                val = ', '.join(listify(vals))
             elif field == 'Skills':
                 skillIDs =dbTable["userSkills"].query([('UserID','=',row[0])],['SkillID'])
                 skillIDs = listify(skillIDs)
-                val = dbTable["skills"].query([('ID','IN',skillIDs)],['Skill'])
+                vals = dbTable["skills"].query([('ID','IN',skillIDs)],['Skill'])
+                val = ', '.join(listify(vals))
             elif field == 'Course':
                 courseID =dbTable["users"].query([('ID','=',row[0])],['CourseID'])
-                val = dbTable["course"].query([('ID','=',courseID[0][0])],['Name'])
+                vals = dbTable["course"].query([('ID','=',courseID[0][0])],['Name'])
+                val = ', '.join(listify(vals))
             else:
                 for i in range(0,len(qFields)):
                     if field == qFields[i]:

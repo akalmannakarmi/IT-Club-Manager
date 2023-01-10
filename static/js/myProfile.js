@@ -17,32 +17,13 @@ function nameC() {
     submitButton();
 }
 
-function email() {
-    const emailW = document.getElementById('email-warning');
-    const val = document.getElementById('email').value;
-    if (val == "") {
-        emailW.innerText = '';
-        emailW.setAttribute("hidden", "");
-        invEmail = true;
-    } else if (val.indexOf('@') == -1) {
-        emailW.innerText = 'Invalid Email';
-        emailW.removeAttribute("hidden");
-        invEmail = true;
-    } else {
-        emailW.innerText = '';
-        emailW.setAttribute("hidden", "");
-        invEmail = false;
-    }
-    submitButton();
-}
-
 function password() {
     const passwordW = document.getElementById('password-warning');
     const val = document.getElementById('password').value;
     if (val == "") {
         passwordW.innerText = '';
         passwordW.setAttribute("hidden", "");
-        invPassword = true;
+        invPassword = false;
     } else if (val.length < 10) {
         passwordW.innerText = 'Password must be atleast 10 characters';
         passwordW.removeAttribute("hidden");
@@ -56,16 +37,14 @@ function password() {
 }
 
 let invName = true;
-let invEmail = true;
-let invPassword = true;
+let invPassword = false;
 document.getElementById('name').addEventListener('input', nameC);
-document.getElementById('email').addEventListener('input', email);
 document.getElementById('password').addEventListener('input', password);
 
 function submitButton() {
-    if (invEmail || invName || invPassword) {
-        document.getElementById('submit').disabled = true;
+    if (invName || invPassword) {
+        document.getElementById('save').disabled = true;
     } else {
-        document.getElementById('submit').disabled = false;
+        document.getElementById('save').disabled = false;
     }
 }
