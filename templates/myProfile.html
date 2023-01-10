@@ -5,7 +5,7 @@
             <h5 class="card-title text-center">Your Profile</h5>
         </div>
         <div class="card-body">
-            <form class="container" action="/signup" method="post">
+            <form class="container" action="/myProfile" method="post">
                 <div class="row">
                     <div class="col-6">
                         <label for="name">Name</label>
@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-6">
                         <label for="points">Points</label>
-                        <input class="form-control" id="points" placeholder="-1" type="text" disabled>
+                        <input class="form-control" id="points" placeholder="-1" type="text" name="points" value="{{rData[ 'points']}}" disabled>
                     </div>
                 </div>
                 <div class="row">
@@ -65,13 +65,13 @@
                     <small id="password-warning" class="form-text text-warning" hidden>Invalid Password</small>{% endif %}
                 </div>
                 <br>
-                <button class="btn btn-warning" id="reset">Reset</button>
+                <a href="/myProfile" class="btn btn-warning" id="reset">Reset</a>
                 <button class="btn btn-primary" type="submit" id="save" value="save">Save</button>
             </form>
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-danger" id="logout">Log out</button>
-            <button type="button" class="btn btn-danger" id="delete">Delete</button>
+            <a href="/logout" class="btn btn-danger" id="logout">Log out</a>
+            <a href="/delete" class="btn btn-danger" id="delete">Delete</a>
         </div>
     </div>
 </div>

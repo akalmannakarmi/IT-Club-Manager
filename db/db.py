@@ -191,6 +191,44 @@ def getMembers(conditions=None,fields=None,orderby=''):
         result.append(t)   
     return result
 
+def changeMember(email,fieldNValues):
+    userID = dbTable["users"].query([("Email","=",email)],["ID"])[0][0]
+    print(fieldNValues)
+    for field,value in fieldNValues.items(multi=False):
+        if field == "0password":
+            if value:
+                dbTable["users"].update([("Password",value)],[("ID","=",userID)])
+        elif field == "course":
+            courseID = dbTable["course"].query([('Name','=',value)],['ID'])[0][0]
+            dbTable["users"].update([("CourseID",courseID)],[("ID","=",userID)])
+        elif field == "interests":
+            dbTable["userInterests"].remove(userID,"UserID",'=')
+            interests=value.split(",")
+            for interest in interests:
+                interest = interest.strip()
+                if not dbTable['interests'].query([("Interest","=",interest)]):
+                    dbTable['interests'].insert({"Interest":interest})
+        
+                dbTable['userInterests'].insert({
+                    "userID":userID,
+                    "interestID":dbTable['interests'].query([("Interest","=",interest)],["ID"])[0][0]
+                })
+        elif field == "skills":
+            skills=value.split(',')
+            for skill in skills:
+                skill = skill.strip()
+                if not dbTable['skills'].query([("Skill","=",skill)]):
+                    dbTable['skills'].insert({"Skill":skill})
+                
+                dbTable['userSkills'].insert({
+                    "userID":userID,
+                    "skillID":dbTable['skills'].query([("Skill","=",skill)],["ID"])[0][0]
+                })
+        else:    
+            dbTable["users"].update([(field,value)],[("ID","=",userID)])
+    
+    return conn.commit
+
 def getInterests(conditions=None,fields=None):
     return dbTable['interests'].query(conditions,fields)
 

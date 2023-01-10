@@ -60,6 +60,32 @@ class Table:
             if show:
                 self.display(f"Result: Failed \tError:{e}",self.eColor)
         
+    def update(self,fieldNValues,conditions,show=True):
+        fnv=""
+        values = []
+        print(fieldNValues)
+        for field,value in fieldNValues:
+            fnv += field + "= (?),"
+            values.append(value)
+        fnv=fnv[:-1]
+        
+        q = ""
+        for field,op,value in conditions:
+            values.append(value)
+            q += f"{field} {op} (?) "
+        
+        c = f"UPDATE {self.name} SET {fnv} WHERE {q}"
+        
+        if show:
+            self.display(f"Update Table:{self.name} \nCommand:{c}\tValues:{values}",self.color)
+            
+        try:
+            self.cur.execute(c,values)
+            if show:
+                self.display("Result: Success",self.color)
+        except BaseException as e:
+            if show:
+                self.display(f"Result: Failed \tError:{e}",self.eColor)
     
     def query(self,fieldNValues=None,fields=None,orderby='',show=False):
         result= []

@@ -29,7 +29,7 @@ def myProfile():
         return render_template('myProfile.html',rData=rdata,courses=db.getCourses(fields=["Name"]))
     
     # Recive all data
-    rData = request.form.deepcopy()
+    rData = request.form.copy()
     
     #Print data Recived
     cprint(f"My Profile",'blue')
@@ -39,31 +39,30 @@ def myProfile():
         cprint((key,value),'blue')
         
     # Error on not enough data
-    if not ('name' in rData and 'email' in rData and '0password' in rData and 'skills' in rData
+    if not ('name' in rData and '0password' in rData and 'skills' in rData
             and 'course' in rData and 'interests' in rData):
         return render_template("error.html",error=f"Incomplete data")
     
     # Invalid data 
     if len(rData['name'])<3:
         return render_template("myProfile.html",rData=rData,name=True,courses=db.getCourses(fields=["Name"]))
-    if rData['email'].find('@') == -1:
-        return render_template("myProfile.html",rData=rData,email=True,courses=db.getCourses(fields=["Name"]))
-    if len(rData['0password'])<10:
+    if len(rData['0password'])<10 and len(rData['0password'])>0:
         return render_template("myProfile.html",rData=rData,password=True,courses=db.getCourses(fields=["Name"]))
     
     # Add to database
-    try:
-        commit = db.changeMember(rData)
-        commits.append(commit)
-    except BaseException as e:
-        return render_template("error.html",error=f"Error: {e}")
+    # try:
+    commit = db.changeMember(session['email'],rData)
+    commits.append(commit)
+    # except BaseException as e:
+    #     return render_template("error.html",error=f"Error: {e}")
     
     # Add the req data to session
-    keys = ['email','name']
+    keys = ['name']
     for key in keys:
+        print(session)
         session[key]=rData[key]
         
-    cprint(f"Signup Time:{time()-startTime}",'cyan')
+    cprint(f"myProfile Time:{time()-startTime}",'cyan')
     return redirect('/')
 
 
