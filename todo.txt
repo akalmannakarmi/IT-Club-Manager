@@ -6,9 +6,6 @@ Index page
 users page
     admins only
     better ui
-myProfile page
-    able to edit data
-    proper ui
 
 
 Future
