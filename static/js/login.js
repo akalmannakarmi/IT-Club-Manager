@@ -1,34 +1,36 @@
-function email() {
-    const emailW = document.getElementById('email-warning');
-    const val = document.getElementById('email').value;
-    if (val == "") {
-        emailW.innerText = '';
-        emailW.visibility = 'hidden';
-        invEmail = true;
-    } else if (val.indexOf('@') == -1) {
-        emailW.innerText = 'Invalid Email';
-        emailW.visibility = 'active';
-        invEmail = true;
-    } else {
-        emailW.innerText = '';
-        emailW.visibility = 'hidden';
-        invEmail = false;
+byID("login").addEventListener("click", async () => {
+  const email = byID('email').value;
+  const password = byID('password').value;
+  const success = byID("success");
+  const error = byID("error");
+
+  const response = await fetch(window.location.href, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ "email": email, "password": password })
+  });
+
+  if (response.ok) {
+    const message = await response.json();
+    if (message.status == "success"){
+      success.hidden = false;
+      success.innerText = message.detail;
+      setTimeout(()=>{success.hidden = true;},5000);
+      console.log('Login successful', message.detail);
+      setTimeout(()=>{window.location.href=message.redirect},1000);
+    }else{
+      error.hidden = false;
+      error.innerText = message.detail;
+      setTimeout(()=>{error.hidden = true;},5000);
+      console.log('Login failed', message.detail);
     }
-    submitButton();
-}
-
-function password() {
-    document.getElementById('email-warning').visibility = "hidden";
-}
-
-let invEmail = true;
-document.getElementById('email').addEventListener('input', email);
-document.getElementById('password').addEventListener('input', password);
-
-function submitButton() {
-    if (invEmail) {
-        document.getElementById('submit').disabled = true;
-    } else {
-        document.getElementById('submit').disabled = false;
-    }
-}
+  } else {
+    console.log('Login failed');
+    error.hidden = false;
+    error.innerText = "Unexpected Error";
+    setTimeout(()=>{error.hidden = true;},5000);
+  }
+});
+  

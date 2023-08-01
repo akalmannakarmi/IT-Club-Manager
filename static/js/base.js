@@ -7,6 +7,10 @@ window.addEventListener("scroll", (e) => {
     }
 });
 
-// setTimeout(function() {
-//     document.getElementById("loader").className = "d-none";
-// }, 1500);
+setTimeout(function() {
+    document.getElementById("loader").className = "d-none";
+}, 1500);
+
+function byID(id){
+    return document.getElementById(id);
+}

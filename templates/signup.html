@@ -1,63 +1,43 @@
-{% extends '0Base.html' %} {% block title %} Sign Up {% endblock %} {% block body %}
-<div class="d-flex mt-5 align-items-center">
-    <div class="mx-auto">
-        <h1 class="text-center">Sign up</h1>
-        <div class="card shadow rounded border border-2 border-dark">
-            <div class="card-body mt-4 mx-auto px-5">
-                <form class="container contact-form" action="/signup" method="post">
-                    <div class="row">
-                        <div class="col-8">
-                            <label for="name">Name</label>
-                            <input class="form-control" id="name" placeholder="Name" type="text" name="name" value="{{rData['name']}}">{% if name %}
-                            <small id="name-warning" class="form-text text-warning">Invalid Name</small>{% else %}
-                            <small id="name-warning" class="form-text text-warning" hidden>Invalid Name</small>{% endif %}
-                        </div>
-                        <div class="col-4">
-                            <label for="course">Course</label>
-                            <select class="form-select" aria-label="Default select example" id="course" name="course">{%for course in courses%}
-                                {%if course[0] == rData['course'] %}
-                                <option selected value="{{rData[ 'course']}}">{{rData['course']}}</option>{%else%}
-                                <option value="{{course[0]}}">{{course[0]}}</option>{%endif%}{%endfor%}
-                            </select>{% if course %}
-                            <small id="course-warning" class="form-text text-warning">Invalid Course</small>{% else %}
-                            <small id="course-warning" class="form-text text-warning" hidden>Invalid Course</small>{% endif %}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="interests">Interests</label>
-                            <input class="form-control" id="interests" placeholder="Interests" type="text" name="interests" value="{{rData[ 'interests']}}">{% if interests %}
-                            <small id="interests-warning" class="form-text text-warning">Invalid Interests</small>{% else %}
-                            <small id="interests-warning" class="form-text text-warning" hidden>Invalid Interests</small>{% endif %}
-                        </div>
-                        <div class="col-6">
-                            <label for="skills">Skills</label>
-                            <input class="form-control" id="skills" placeholder="Skills" type="text" name="skills" value="{{rData[ 'skills']}}">{% if skills %}
-                            <small id="skills-warning" class="form-text text-warning">Invalid Skills</small>{% else %}
-                            <small id="skills-warning" class="form-text text-warning" hidden>Invalid Skills</small>{% endif %}
-                        </div>
-                    </div>
-                    <div>
-                        <label for="email">Email</label>
-                        <input class="form-control" id="email" placeholder="Email" type="email" name="email" value="{{rData[ 'email']}}">{% if email %}
-                        <small id="email-warning" class="form-text text-warning">Invalid Email</small>{% else %}
-                        <small id="email-warning" class="form-text text-warning" hidden>Invalid Email</small>{% endif %}
-                    </div>
-                    <div>
-                        <label for="password">Password</label>
-                        <input class="form-control" id="password" placeholder="Password" type="password" name="0password" value="{{rData[ '0password']}}">{% if password %}
-                        <small id="password-warning" class="form-text text-warning">Invalid Password</small>{% else %}
-                        <small id="password-warning" class="form-text text-warning" hidden>Invalid Password</small>{% endif %}
-                    </div>
-                    <br>
-                    <a href="/login">login instead?</a>
-                    <br>
-                    <button class="btn btn-primary" type="submit" id="submit" value="signUp">SignUp</button>
-                </form>
-            </div>
+{%extends 'base.html' %}
+{%block title%}Index{%endblock%}
+{%block head%}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/centerFrom.css') }}">
+{%endblock%}
+{%block body%}
+<main class="form-signin text-center">
+      <img class="mb-4" src="{{ url_for('static',filename='img/logo2.png') }}" alt="" width="72" height="57">
+      <h1 class="h3 mb-3 fw-normal">Sign up</h1>
+  
+      <div class="form-floating">
+        <input type="name" class="form-control form-control-{{theme}} " id="username">
+        <label for="username">username</label>
+      </div>
+      <div class="form-floating">
+        <input type="email" class="form-control form-control-{{theme}} " id="email">
+        <label for="email">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control form-control-{{theme}}" id="password">
+        <label for="password">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control form-control-{{theme}}" id="confirmPassword">
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
+      
+      <div>
+        <div class="alert alert-success" role="alert" id="success" hidden>
+          Success
         </div>
-    </div>
-</div>
-{% endblock %}{% block bodyEnd %}
-<script src="{{ url_for( 'static',filename='js/signup.js' ) }}"></script>
-{% endblock %}
+        <div class="alert alert-danger" role="alert" id="error" hidden>
+          Error
+        </div>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" id="signup">Sign up</button>
+</main>
+{%endblock%}
+{%block foot%}
+<script src="{{ url_for('static',filename='js/signup.js') }}"> </script> 
+{%endblock%}
+

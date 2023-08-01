@@ -1,15 +1,1 @@
-Index page
-    convert to bootstrap
-    remove uneccesary
-    insert actuall data
-    change login button to profile pic
-users page
-    admins only
-    better ui
-
-
-Future
-Live global chat mode
-    on index page
-    list of users
-    save chat log
+idk
