@@ -1,15 +1,81 @@
-Index page
-    convert to bootstrap
-    remove uneccesary
-    insert actuall data
-    change login button to profile pic
-users page
-    admins only
-    better ui
+################################
+######## Page Details	########
+################################
 
+[ ] Index page
+	[ ] Navbar
+	[ ] Hero
+	[ ] Main
+	[ ] Highlights
+	[ ] Footer
 
-Future
-Live global chat mode
-    on index page
-    list of users
-    save chat log
+[ ] Sign Up
+	[ ] Email { College Email Validate aswell with mail}
+	[ ] Password
+
+[ ] Sign In
+	[ ] Email
+	[ ] Password
+	[ ] Remember Me
+	[ ] Forgot Password
+
+[ ] Profile
+	[ ] Name
+	[ ] Course
+	[ ] Batch
+
+	[ ] Edit {if myprofile}
+		[ ] Change
+		[ ] Remove {empty = remove}
+
+[ ] Posts
+	[ ] List Post
+	[ ] Comment
+
+	[ ] Create Post
+		[ ] Title
+		[ ] Details
+		[ ] Images
+
+	[ ] My Posts
+		[ ] List My Posts
+		[ ] Edit Post
+		[ ] Delete Post
+
+################################
+######## Database 		########
+################################
+
+[ ] Courses
+	- Id
+	- Name
+
+[ ] Users
+	- Id
+	- Email
+	- Password
+
+	- Name
+	- CourseId
+	- Batch
+
+[ ] Skills
+	- Id
+	- Name
+
+[ ] UserSkills
+	- UserId
+	- SkillId
+	- Level
+
+[ ] Posts
+	- Id
+	- UserId
+	- Title
+	- Details
+	- Images { name seprated by , }
+
+[ ]	Comment
+	- PostId
+	- UserId
+	- Message
