@@ -46,34 +46,37 @@
 ######## Database 		########
 ################################
 
-[ ] Courses
-	- Id
-	- Name
-
-[ ] Users
+[ ] User
 	- Id
 	- Email
 	- Password
 
+
+[ ] Course
+	- Id
+	- Name
+
+[ ] Batch
+	- Id
+	- Name
+
+[ ] Skill
+	- Id
+	- Name
+
+[ ] Profile
+	- UserId
 	- Name
 	- CourseId
-	- Batch
+	- BatchId
+	- Skills
 
-[ ] Skills
-	- Id
-	- Name
 
-[ ] UserSkills
-	- UserId
-	- SkillId
-	- Level
 
-[ ] Posts
-	- Id
+[ ] Post
 	- UserId
 	- Title
 	- Details
-	- Images { name seprated by , }
 
 [ ]	Comment
 	- PostId

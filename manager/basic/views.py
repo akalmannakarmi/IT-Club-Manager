@@ -1,7 +1,18 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse,HttpRequest
+from django.shortcuts import render,redirect
 
-# Create your views here.
 
-def index(request):
-    return HttpResponse("Welcome to the custom basic app!")
+def index(request:HttpRequest):
+	return render(request,"index.html")
+
+def register(request:HttpRequest):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('/')
+	else:
+		form = UserCreationForm()
+	
+	return render(request, 'registration/register.html', {'form': form})
